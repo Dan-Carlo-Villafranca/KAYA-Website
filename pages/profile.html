@@ -1,16 +1,16 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Edit Profile | KAYA</title>
+    <link rel="icon" type="image/png" href="assets/images/KAYA app.png">
 
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap"
-        rel="stylesheet"
-    >
+        rel="stylesheet">
 
     <link rel="stylesheet" href="../css/variables.css">
     <link rel="stylesheet" href="../css/reset.css">
@@ -35,11 +35,7 @@
             <div class="nav-actions">
                 <span id="navbarUserName">Job Seeker</span>
 
-                <button
-                    type="button"
-                    class="btn btn-secondary"
-                    id="logoutButton"
-                >
+                <button type="button" class="btn btn-secondary" id="logoutButton">
                     Logout
                 </button>
             </div>
@@ -77,87 +73,41 @@
                 <form id="profileForm">
                     <div class="form-group">
                         <label for="fullNameInput">Full Name *</label>
-                        <input
-                            type="text"
-                            id="fullNameInput"
-                            name="full_name"
-                            class="form-input"
-                            autocomplete="name"
-                            placeholder="Enter your full name"
-                            maxlength="120"
-                            required
-                        >
+                        <input type="text" id="fullNameInput" name="full_name" class="form-input" autocomplete="name"
+                            placeholder="Enter your full name" maxlength="120" required>
                     </div>
 
                     <div class="form-group">
                         <label for="phoneInput">Phone Number *</label>
-                        <input
-                            type="tel"
-                            id="phoneInput"
-                            name="phone"
-                            class="form-input"
-                            autocomplete="tel"
-                            placeholder="e.g. 09XXXXXXXXX"
-                            maxlength="30"
-                            required
-                        >
+                        <input type="tel" id="phoneInput" name="phone" class="form-input" autocomplete="tel"
+                            placeholder="e.g. 09XXXXXXXXX" maxlength="30" required>
                     </div>
 
                     <div class="form-group">
                         <label for="locationInput">Location *</label>
-                        <input
-                            type="text"
-                            id="locationInput"
-                            name="location"
-                            class="form-input"
-                            autocomplete="address-level2"
-                            placeholder="e.g. Minglanilla, Cebu"
-                            maxlength="150"
-                            required
-                        >
+                        <input type="text" id="locationInput" name="location" class="form-input"
+                            autocomplete="address-level2" placeholder="e.g. Minglanilla, Cebu" maxlength="150" required>
                     </div>
 
                     <div class="form-group">
                         <label for="primarySkillInput">Primary Skill *</label>
-                        <input
-                            type="text"
-                            id="primarySkillInput"
-                            name="primary_skill"
-                            class="form-input"
-                            placeholder="e.g. Carpentry, Graphic Design"
-                            maxlength="100"
-                            required
-                        >
+                        <input type="text" id="primarySkillInput" name="primary_skill" class="form-input"
+                            placeholder="e.g. Carpentry, Graphic Design" maxlength="100" required>
                     </div>
 
                     <div class="form-group">
                         <label for="bioInput">About Me *</label>
-                        <textarea
-                            id="bioInput"
-                            name="bio"
-                            class="form-input profile-bio-input"
-                            placeholder="Describe your experience, skills, and the services you offer."
-                            rows="5"
-                            maxlength="1000"
-                            required
-                        ></textarea>
+                        <textarea id="bioInput" name="bio" class="form-input profile-bio-input"
+                            placeholder="Describe your experience, skills, and the services you offer." rows="5"
+                            maxlength="1000" required></textarea>
                         <small>
                             Write a short introduction about yourself.
                         </small>
                     </div>
 
-                    <p
-                        id="profileMessage"
-                        class="profile-message"
-                        role="status"
-                        aria-live="polite"
-                    ></p>
+                    <p id="profileMessage" class="profile-message" role="status" aria-live="polite"></p>
 
-                    <button
-                        type="submit"
-                        id="saveProfileButton"
-                        class="btn btn-primary btn-full"
-                    >
+                    <button type="submit" id="saveProfileButton" class="btn btn-primary btn-full">
                         Save Profile and Continue
                     </button>
 
@@ -181,4 +131,5 @@
             .addEventListener('click', logoutUser);
     </script>
 </body>
+
 </html>
