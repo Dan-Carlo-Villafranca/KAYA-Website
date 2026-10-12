@@ -1,16 +1,11 @@
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>Worker Profile | KAYA</title>
+    <title>Edit Profile | KAYA</title>
 
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap"
@@ -22,333 +17,168 @@
     <link rel="stylesheet" href="../css/global.css">
     <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="../css/profile.css">
-
 </head>
 
 <body>
-
-<header class="navbar">
-
-    <div class="container navbar-inner">
-
-        <a href="../index.html" class="logo">
-            KA<span>YA</span>
-        </a>
-
-        <nav class="nav-links">
-
-            <a href="search.html">
-                Find Workers
+    <header class="navbar">
+        <div class="container navbar-inner">
+            <a href="../index.html" class="logo">
+                KA<span>YA</span>
             </a>
 
-        </nav>
+            <nav class="nav-links">
+                <a href="jobseeker-dashboard.html">Dashboard</a>
+                <a href="search.html">Find Work</a>
+                <a href="profile.html" aria-current="page">My Profile</a>
+            </nav>
 
-        <div class="nav-actions">
+            <div class="nav-actions">
+                <span id="navbarUserName">Job Seeker</span>
 
-            <a
-                href="login.html"
-                class="btn btn-secondary"
-            >
-                Login
-            </a>
-
-            <a
-                href="register.html"
-                class="btn btn-primary"
-            >
-                Join KAYA
-            </a>
-
-        </div>
-
-    </div>
-
-</header>
-
-
-<main class="profile-page">
-
-    <div class="container">
-
-        <!-- PROFILE HEADER -->
-
-        <section class="profile-header card">
-
-            <div class="profile-avatar">
-                JD
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    id="logoutButton"
+                >
+                    Logout
+                </button>
             </div>
+        </div>
+    </header>
 
+    <main class="profile-page">
+        <div class="container profile-container">
+            <section class="profile-form-card card">
+                <div class="profile-form-heading">
+                    <span class="auth-label">JOB SEEKER PROFILE</span>
+                    <h1>Complete Your Profile</h1>
 
-            <div class="profile-info">
-
-                <span class="auth-label">
-                    VERIFIED WORKER
-                </span>
-
-                <h1>
-                    Juan Dela Cruz
-                </h1>
-
-                <p class="profile-role">
-                    Graphic Designer
-                </p>
-
-                <p class="profile-location">
-                    Cebu City, Philippines
-                </p>
-
-
-                <div class="rating large-rating">
-
-                    <span>
-                        ★★★★★
-                    </span>
-
-                    <strong>
-                        4.9
-                    </strong>
-
-                    <small>
-                        27 reviews
-                    </small>
-
+                    <p>
+                        Tell us about yourself and the services you can
+                        provide. Complete the required fields to continue
+                        using KAYA.
+                    </p>
                 </div>
 
-            </div>
+                <div class="profile-account-info">
+                    <span class="profile-avatar" aria-hidden="true">
+                        <span id="profileInitials">JS</span>
+                    </span>
 
+                    <div>
+                        <h2 id="profileName">Your Name</h2>
+                        <p id="profileEmail">Loading email...</p>
+                        <span id="profileRole" class="profile-role">
+                            JOB SEEKER
+                        </span>
+                    </div>
+                </div>
 
-            <div class="profile-actions">
-
-                <button class="btn btn-primary">
-                    Contact
-                </button>
-
-                <button class="btn btn-secondary">
-                    Save
-                </button>
-
-            </div>
-
-        </section>
-
-
-        <!-- ABOUT -->
-
-        <section class="profile-section">
-
-            <div class="section-header">
-
-                <h2>
-                    About
-                </h2>
-
-            </div>
-
-            <div class="card profile-content">
-
-                <p>
-                    I am a freelance graphic designer
-                    specializing in branding, digital artwork
-                    and visual identity.
-                </p>
-
-            </div>
-
-        </section>
-
-
-        <!-- SKILLS -->
-
-        <section class="profile-section">
-
-            <div class="section-header">
-
-                <h2>
-                    Skills
-                </h2>
-
-            </div>
-
-            <div class="skills-list">
-
-                <span class="skill">
-                    Logo Design
-                </span>
-
-                <span class="skill">
-                    Branding
-                </span>
-
-                <span class="skill">
-                    Photoshop
-                </span>
-
-                <span class="skill">
-                    Illustrator
-                </span>
-
-            </div>
-
-        </section>
-
-
-        <!-- PORTFOLIO -->
-
-        <section class="profile-section">
-
-            <div class="section-header">
-
-                <h2>
-                    Portfolio
-                </h2>
-
-                <p>
-                    Selected work and projects.
-                </p>
-
-            </div>
-
-
-            <div class="portfolio-grid">
-
-                <article class="portfolio-item card">
-
-                    <div class="portfolio-image">
-                        Project 01
+                <form id="profileForm">
+                    <div class="form-group">
+                        <label for="fullNameInput">Full Name *</label>
+                        <input
+                            type="text"
+                            id="fullNameInput"
+                            name="full_name"
+                            class="form-input"
+                            autocomplete="name"
+                            placeholder="Enter your full name"
+                            maxlength="120"
+                            required
+                        >
                     </div>
 
-                    <div class="portfolio-info">
-
-                        <h3>
-                            Brand Identity
-                        </h3>
-
-                        <p>
-                            Complete visual identity
-                            for a local business.
-                        </p>
-
+                    <div class="form-group">
+                        <label for="phoneInput">Phone Number *</label>
+                        <input
+                            type="tel"
+                            id="phoneInput"
+                            name="phone"
+                            class="form-input"
+                            autocomplete="tel"
+                            placeholder="e.g. 09XXXXXXXXX"
+                            maxlength="30"
+                            required
+                        >
                     </div>
 
-                </article>
-
-
-                <article class="portfolio-item card">
-
-                    <div class="portfolio-image">
-                        Project 02
+                    <div class="form-group">
+                        <label for="locationInput">Location *</label>
+                        <input
+                            type="text"
+                            id="locationInput"
+                            name="location"
+                            class="form-input"
+                            autocomplete="address-level2"
+                            placeholder="e.g. Minglanilla, Cebu"
+                            maxlength="150"
+                            required
+                        >
                     </div>
 
-                    <div class="portfolio-info">
-
-                        <h3>
-                            Restaurant Branding
-                        </h3>
-
-                        <p>
-                            Logo and promotional
-                            material design.
-                        </p>
-
+                    <div class="form-group">
+                        <label for="primarySkillInput">Primary Skill *</label>
+                        <input
+                            type="text"
+                            id="primarySkillInput"
+                            name="primary_skill"
+                            class="form-input"
+                            placeholder="e.g. Carpentry, Graphic Design"
+                            maxlength="100"
+                            required
+                        >
                     </div>
 
-                </article>
-
-
-                <article class="portfolio-item card">
-
-                    <div class="portfolio-image">
-                        Project 03
+                    <div class="form-group">
+                        <label for="bioInput">About Me *</label>
+                        <textarea
+                            id="bioInput"
+                            name="bio"
+                            class="form-input profile-bio-input"
+                            placeholder="Describe your experience, skills, and the services you offer."
+                            rows="5"
+                            maxlength="1000"
+                            required
+                        ></textarea>
+                        <small>
+                            Write a short introduction about yourself.
+                        </small>
                     </div>
 
-                    <div class="portfolio-info">
+                    <p
+                        id="profileMessage"
+                        class="profile-message"
+                        role="status"
+                        aria-live="polite"
+                    ></p>
 
-                        <h3>
-                            Social Media Campaign
-                        </h3>
+                    <button
+                        type="submit"
+                        id="saveProfileButton"
+                        class="btn btn-primary btn-full"
+                    >
+                        Save Profile and Continue
+                    </button>
 
-                        <p>
-                            Digital campaign artwork.
-                        </p>
-
-                    </div>
-
-                </article>
-
-            </div>
-
-        </section>
-
-
-        <!-- REVIEWS -->
-
-        <section class="profile-section">
-
-            <div class="section-header">
-
-                <h2>
-                    Reviews
-                </h2>
-
-            </div>
-
-
-            <div class="reviews">
-
-                <article class="card review">
-
-                    <div class="review-rating">
-                        ★★★★★
-                    </div>
-
-                    <p>
-                        Great communication and excellent
-                        work. Delivered exactly what we needed.
+                    <p class="profile-required-note">
+                        * Required fields. Your profile photo can be added
+                        later.
                     </p>
+                </form>
+            </section>
+        </div>
+    </main>
 
-                    <strong>
-                        Maria Santos
-                    </strong>
-
-                </article>
-
-
-                <article class="card review">
-
-                    <div class="review-rating">
-                        ★★★★★
-                    </div>
-
-                    <p>
-                        Very professional and easy to work with.
-                    </p>
-
-                    <strong>
-                        Carlo Reyes
-                    </strong>
-
-                </article>
-
-            </div>
-
-        </section>
-
-    </div>
-
-</main>
-
-<!-- 1. Enforce Global Session & RBAC -->
     <script type="module" src="../js/app.js"></script>
-
-    <!-- 2. Load Profile Logic -->
     <script type="module" src="../js/profile.js"></script>
 
-    <!-- 3. Expose Logout Function for Navbar/Buttons -->
     <script type="module">
         import { logoutUser } from '../js/auth.js';
-        window.logout = async function() {
-            await logoutUser();
-        };
+
+        document
+            .getElementById('logoutButton')
+            .addEventListener('click', logoutUser);
     </script>
 </body>
 </html>

@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Register | KAYA</title>
+
     <link rel="stylesheet" href="../css/variables.css">
     <link rel="stylesheet" href="../css/reset.css">
     <link rel="stylesheet" href="../css/global.css">
@@ -13,64 +15,172 @@
 
     <div class="auth-page">
         <div class="auth-card">
+
             <div class="auth-header">
                 <span class="auth-label">GET STARTED</span>
                 <h1>Create Account</h1>
             </div>
 
             <form id="registerForm">
+
                 <div class="form-group">
                     <label for="fullName">Full Name</label>
-                    <input type="text" id="fullName" class="form-input" placeholder="John Doe" required />
+
+                    <input
+                        type="text"
+                        id="fullName"
+                        name="fullName"
+                        class="form-input"
+                        placeholder="John Doe"
+                        autocomplete="name"
+                        required
+                    >
                 </div>
 
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" id="email" class="form-input" placeholder="name@example.com" required />
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        class="form-input"
+                        placeholder="name@example.com"
+                        autocomplete="email"
+                        required
+                    >
                 </div>
 
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" id="password" class="form-input" placeholder="••••••••" required />
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        class="form-input"
+                        placeholder="Enter your password"
+                        autocomplete="new-password"
+                        minlength="6"
+                        required
+                    >
                 </div>
 
                 <div class="form-group">
                     <label>Account Type</label>
+
                     <div class="role-selection">
+
                         <label class="role-option">
-                            <input type="radio" name="role" value="jobseeker" checked />
+                            <input
+                                type="radio"
+                                name="role"
+                                value="jobseeker"
+                                checked
+                                required
+                            >
                             <span>Jobseeker</span>
                         </label>
+
                         <label class="role-option">
-                            <input type="radio" name="role" value="client" />
+                            <input
+                                type="radio"
+                                name="role"
+                                value="client"
+                                required
+                            >
                             <span>Client</span>
                         </label>
+
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary btn-full">Create Account</button>
+                <button
+                    type="submit"
+                    id="registerButton"
+                    class="btn btn-primary btn-full"
+                >
+                    Create Account
+                </button>
+
+                <p
+                    id="registerMessage"
+                    role="status"
+                    aria-live="polite"
+                ></p>
+
             </form>
 
             <p class="auth-footer">
-                Already have an account? <a href="login.html">Log in</a>
+                Already have an account?
+                <a href="login.html">Log in</a>
             </p>
+
         </div>
     </div>
 
-    <!-- Script imports -->
+    <!-- Shared website logic -->
     <script type="module" src="../js/app.js"></script>
+
+    <!-- Registration logic -->
     <script type="module">
         import { registerUser } from '../js/auth.js';
 
-        document.getElementById('registerForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const fullName = e.target.fullName.value;
-            const email = e.target.email.value;
-            const password = e.target.password.value;
-            const role = e.target.role.value;
+        const registerForm =
+            document.getElementById('registerForm');
 
-            await registerUser({ email, password, fullName, role });
+        const registerButton =
+            document.getElementById('registerButton');
+
+        const registerMessage =
+            document.getElementById('registerMessage');
+
+        registerForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            if (!registerForm.checkValidity()) {
+                registerForm.reportValidity();
+                return;
+            }
+
+            const fullName =
+                registerForm.elements['fullName'].value.trim();
+
+            const email =
+                registerForm.elements['email'].value.trim();
+
+            const password =
+                registerForm.elements['password'].value;
+
+            const role =
+                registerForm.elements['role'].value;
+
+            if (!fullName) {
+                registerMessage.textContent =
+                    'Please enter your full name.';
+                return;
+            }
+
+            registerButton.disabled = true;
+            registerButton.textContent = 'Creating Account...';
+
+            registerMessage.textContent = '';
+
+            try {
+                await registerUser({
+                    fullName,
+                    email,
+                    password,
+                    role
+                });
+            } finally {
+                // Restore the button if registration fails or
+                // does not redirect the browser.
+                registerButton.disabled = false;
+                registerButton.textContent = 'Create Account';
+            }
         });
     </script>
+
 </body>
 </html>

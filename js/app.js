@@ -1,111 +1,190 @@
-import { supabase, getCurrentUser } from './supabase.js';
-
-(async function enforceRBAC() {
-  const user = await getCurrentUser();
-  const currentPath = window.location.pathname;
-
-  const isAuthPage = currentPath.endsWith('login.html') || currentPath.endsWith('register.html');
-  const isClientDashboard = currentPath.endsWith('client-dashboard.html');
-  const isJobseekerDashboard = currentPath.endsWith('jobseeker-dashboard.html');
-
-  // 1. If user is NOT logged in and trying to access a protected page
-  if (!user && !isAuthPage && currentPath !== '/' && !currentPath.endsWith('index.html')) {
-    window.location.href = '/pages/login.html';
-    return;
-  }
-
-  // 2. If user IS logged in and attempts to access Login/Register pages
-  if (user && isAuthPage) {
-    if (user.role === 'client') {
-      window.location.href = '/pages/client-dashboard.html';
-    } else {
-      window.location.href = '/pages/jobseeker-dashboard.html';
-    }
-    return;
-  }
-
-  // 3. Enforce Role Isolation (Prevent Client from accessing Jobseeker page & vice versa)
-  if (user) {
-    if (isClientDashboard && user.role !== 'client') {
-      window.location.href = '/pages/jobseeker-dashboard.html';
-    } else if (isJobseekerDashboard && user.role !== 'jobseeker') {
-      window.location.href = '/pages/client-dashboard.html';
-    }
-  }
-})();
-
-// Listen for Auth state changes (e.g., Session Expiry, Multi-tab logout)
-supabase.auth.onAuthStateChange((event, session) => {
-  if (event === 'SIGNED_OUT') {
-    window.location.href = '/pages/login.html';
-  }
-});
 
 import { supabase, getCurrentUser } from './supabase.js';
+
+function getCurrentPage() {
+    return window.location.pathname;
+}
+
+function isPublicPage(path) {
+    return (
+        path === '/' ||
+        path.endsWith('/index.html') ||
+        path.endsWith('/login.html') ||
+        path.endsWith('/register.html')
+    );
+}
+
+function getDashboardPath(role) {
+    return role === 'client'
+        ? '/pages/client-dashboard.html'
+        : '/pages/jobseeker-dashboard.html';
+}
 
 async function initSessionGuard() {
-  const user = await getCurrentUser();
-  const currentPath = window.location.pathname;
+    const path = getCurrentPage();
 
-  const isAuthPage = currentPath.endsWith('login.html') || currentPath.endsWith('register.html');
-  const isClientDashboard = currentPath.endsWith('client-dashboard.html');
-  const isJobseekerDashboard = currentPath.endsWith('jobseeker-dashboard.html');
+    const isClientDashboard =
+        path.endsWith('/client-dashboard.html');
 
-  // A. Protect Private Pages (Dashboards, Profile)
-  if (!user && (isClientDashboard || isJobseekerDashboard)) {
-    window.location.href = '/pages/login.html';
-    return;
-  }
+    const isJobseekerDashboard =
+        path.endsWith('/jobseeker-dashboard.html');
 
-  // B. Prevent Logged-In Users from seeing Login/Register
-  if (user && isAuthPage) {
-    window.location.href = user.role === 'client' 
-      ? '/pages/client-dashboard.html' 
-      : '/pages/jobseeker-dashboard.html';
-    return;
-  }
+    const isProfilePage =
+        path.endsWith('/profile.html');
 
-  // C. Enforce Role Isolation (Clients can't view Jobseeker pages & vice versa)
-  if (user) {
-    if (isClientDashboard && user.role !== 'client') {
-      window.location.href = '/pages/jobseeker-dashboard.html';
-    } else if (isJobseekerDashboard && user.role !== 'jobseeker') {
-      window.location.href = '/pages/client-dashboard.html';
+    try {
+        const user = await getCurrentUser();
+
+        // Protect private pages from logged-out visitors.
+        if (!user && !isPublicPage(path)) {
+            window.location.replace('/pages/login.html');
+            return;
+        }
+
+        // Redirect logged-in users away from login/register.
+        if (
+            user &&
+            (
+                path.endsWith('/login.html') ||
+                path.endsWith('/register.html')
+            )
+        ) {
+            window.location.replace(getDashboardPath(user.role));
+            return;
+        }
+
+        if (!user) {
+            updateNavbarUI(null);
+            return;
+        }
+
+        // Clients cannot access job-seeker pages.
+        if (
+            user.role === 'client' &&
+            (isJobseekerDashboard || isProfilePage)
+        ) {
+            window.location.replace('/pages/client-dashboard.html');
+            return;
+        }
+
+        // Job seekers cannot access the client dashboard.
+        if (
+            user.role !== 'client' &&
+            isClientDashboard
+        ) {
+            window.location.replace('/pages/jobseeker-dashboard.html');
+            return;
+        }
+
+        // Mandatory profile completion for job seekers.
+        // The profile page remains accessible so they can finish it.
+        if (
+            user.role === 'jobseeker' &&
+            !user.profileCompleted &&
+            !isProfilePage
+        ) {
+            window.location.replace('/pages/profile.html');
+            return;
+        }
+
+        updateNavbarUI(user);
+
+    } catch (error) {
+        console.error('Session check failed:', error);
     }
-  }
-
-  // D. Update Navbar UI across the site dynamically
-  updateNavbarUI(user);
 }
 
-// Function to update header links (Log In vs Dashboard/Logout)
+
 function updateNavbarUI(user) {
-  const authContainer = document.getElementById('navbarAuth'); // Give your navbar auth div this ID
-  if (!authContainer) return;
+    const authContainer =
+        document.getElementById('navbarAuth');
 
-  if (user) {
-    const dashboardLink = user.role === 'client' 
-      ? '/pages/client-dashboard.html' 
-      : '/pages/jobseeker-dashboard.html';
+    const dashboardLink =
+        document.getElementById('dashboardNavLink');
 
-    authContainer.innerHTML = `
-      <a href="${dashboardLink}" class="btn btn-secondary">Dashboard</a>
-      <button class="btn btn-outline" onclick="logout()">Log Out</button>
-    `;
-  } else {
-    authContainer.innerHTML = `
-      <a href="/pages/login.html" class="btn btn-secondary">Log In</a>
-      <a href="/pages/register.html" class="btn btn-primary">Sign Up</a>
-    `;
-  }
+    const profileLink =
+        document.getElementById('profileNavLink');
+
+    // Show or hide account navigation links.
+    if (dashboardLink) {
+        dashboardLink.hidden = !user;
+    }
+
+    if (profileLink) {
+        profileLink.hidden =
+            !user || user.role !== 'jobseeker';
+    }
+
+    if (user) {
+        const dashboardPath = getDashboardPath(user.role);
+
+        if (dashboardLink) {
+            dashboardLink.href = dashboardPath;
+        }
+
+        if (profileLink) {
+            profileLink.href = '/pages/profile.html';
+        }
+
+        if (!authContainer) return;
+
+        // Get the actual logged-in user's name.
+        const name = user.fullName?.trim() || 'User';
+
+        authContainer.innerHTML = `
+            <span id="navbarUserName"></span>
+
+            <button
+                id="navbarLogout"
+                class="btn btn-outline"
+                type="button"
+            >
+                Logout
+            </button>
+        `;
+
+        // Safely display the name.
+        document.getElementById('navbarUserName')
+            .textContent = name;
+
+        document
+            .getElementById('navbarLogout')
+            .addEventListener('click', async () => {
+                const { error } = await supabase.auth.signOut();
+
+                if (error) {
+                    console.error('Logout failed:', error);
+                    alert('Logout failed. Please try again.');
+                    return;
+                }
+
+                window.location.replace('/pages/login.html');
+            });
+
+    } else if (authContainer) {
+        authContainer.innerHTML = `
+            <a href="/pages/login.html"
+               class="btn btn-secondary">
+                Login
+            </a>
+
+            <a href="/pages/register.html"
+               class="btn btn-primary">
+                Join KAYA
+            </a>
+        `;
+    }
 }
 
-// Run session check on page load
+
 initSessionGuard();
 
-// Automatically handle multi-tab logouts or session expiry
 supabase.auth.onAuthStateChange((event) => {
-  if (event === 'SIGNED_OUT') {
-    window.location.href = '/pages/login.html';
-  }
+    if (event === 'SIGNED_OUT') {
+        const path = getCurrentPage();
+
+        if (!isPublicPage(path)) {
+            window.location.replace('/pages/login.html');
+        }
+    }
 });

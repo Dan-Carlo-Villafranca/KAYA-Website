@@ -45,11 +45,29 @@
     color: var(--color-text);
 }
 
+
 .nav-actions {
     display: flex;
-    gap: 10px;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 14px;
+    color: #FFFFFF;
 }
 
+/* Logged-in user's name */
+#navbarAuth #navbarUserName {
+    display: inline-flex;
+    align-items: center;
+
+    color: #FFFFFF;
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 1.2;
+
+    white-space: nowrap;
+}
+
+/* Responsive navbar */
 @media (max-width: 750px) {
 
     .nav-links {
@@ -58,5 +76,9 @@
 
     .nav-actions .btn-secondary {
         display: none;
+    }
+
+    #navbarAuth #navbarUserName {
+        font-size: 0.8rem;
     }
 }

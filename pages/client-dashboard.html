@@ -5,17 +5,13 @@
 
     <meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Dashboard | KAYA</title>
 
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap"
-        rel="stylesheet"
-    >
+        rel="stylesheet">
 
     <link rel="stylesheet" href="../css/variables.css">
     <link rel="stylesheet" href="../css/reset.css">
@@ -27,93 +23,95 @@
 
 <body>
 
-<header class="navbar">
+    <header class="navbar">
 
-    <div class="container navbar-inner">
+        <div class="container navbar-inner">
 
-        <a href="../index.html" class="logo">
-            KA<span>YA</span>
-        </a>
-
-        <nav class="nav-links">
-
-            <a href="client-dashboard.html">
-                Dashboard
+            <a href="../index.html" class="logo">
+                KA<span>YA</span>
             </a>
 
-            <a href="search.html">
-                Find Work
-            </a>
+            <nav class="nav-links">
 
-            <a href="profile.html">
-                My Profile
-            </a>
+                <a href="client-dashboard.html">
+                    Dashboard
+                </a>
 
-        </nav>
+                <a href="search.html">
+                    Find Work
+                </a>
 
-        <button
-            class="btn btn-secondary"
-            onclick="logout()"
-        >
-            Logout
-        </button>
+                <a href="profile.html">
+                    My Profile
+                </a>
 
-    </div>
+            </nav>
 
-</header>
+            <div class="nav-actions" id="navbarAuth">
+                <a href="login.html" class="btn btn-secondary">
+                    Login
+                </a>
+
+                <a href="register.html" class="btn btn-primary">
+                    Join KAYA
+                </a>
+            </div>
+
+    </header>
 
 
-<main class="dashboard-container">
-    <!-- Client Welcome Banner -->
-    <div class="dashboard-header">
-        <h1>Client Workspace</h1>
-        <p>Post new job listings, manage active projects, and review candidates.</p>
-        <button class="btn btn-primary" id="postJobBtn">+ Post a New Job</button>
-    </div>
-
-    <!-- Client Quick Stats -->
-    <div class="stats-grid">
-        <div class="stat-card">
-            <span class="stat-label">Active Job Posts</span>
-            <span class="stat-value">3</span>
+    <main class="dashboard-container">
+        <!-- Client Welcome Banner -->
+        <div class="dashboard-header">
+            <h1>Client Workspace</h1>
+            <p>Post new job listings, manage active projects, and review candidates.</p>
+            <button class="btn btn-primary" id="postJobBtn">+ Post a New Job</button>
         </div>
-        <div class="stat-card">
-            <span class="stat-label">Total Applicants</span>
-            <span class="stat-value">18</span>
-        </div>
-        <div class="stat-card">
-            <span class="stat-label">Hired Freelancers</span>
-            <span class="stat-value">5</span>
-        </div>
-    </div>
 
-    <!-- Client Active Listings Section -->
-    <section class="dashboard-section">
-        <h2>Your Active Job Openings</h2>
-        <div class="job-list">
-            <!-- Dynamic or styled client listings -->
-            <div class="job-card">
-                <div class="job-info">
-                    <h3>Frontend Web Developer</h3>
-                    <p>Posted 3 days ago • 8 Applicants</p>
-                </div>
-                <button class="btn btn-secondary">Review Applicants</button>
+        <!-- Client Quick Stats -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span class="stat-label">Active Job Posts</span>
+                <span class="stat-value">3</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-label">Total Applicants</span>
+                <span class="stat-value">18</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-label">Hired Freelancers</span>
+                <span class="stat-value">5</span>
             </div>
         </div>
-    </section>
-</main>
 
-<!-- 1. Enforce RBAC & Session Check -->
-<script type="module" src="../js/app.js"></script>
+        <!-- Client Active Listings Section -->
+        <section class="dashboard-section">
+            <h2>Your Active Job Openings</h2>
+            <div class="job-list">
+                <!-- Dynamic or styled client listings -->
+                <div class="job-card">
+                    <div class="job-info">
+                        <h3>Frontend Web Developer</h3>
+                        <p>Posted 3 days ago • 8 Applicants</p>
+                    </div>
+                    <button class="btn btn-secondary">Review Applicants</button>
+                </div>
+            </div>
+        </section>
+    </main>
 
-<!-- 2. Attach logout function to window -->
-<script type="module">
-    import { logoutUser } from '../js/auth.js';
+    <!-- 1. Enforce RBAC & Session Check -->
+    <script type="module" src="../js/app.js"></script>
 
-    window.logout = async function() {
-        await logoutUser();
-    };
-</script>
+    <!-- 2. Attach logout function to window -->
+    <script type="module">
+        import { logoutUser } from '../js/auth.js';
+
+        window.logout = async function () {
+            await logoutUser();
+        };
+    </script>
 
 </body>
+
 </html>

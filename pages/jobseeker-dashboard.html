@@ -5,17 +5,13 @@
 
     <meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Dashboard | KAYA</title>
 
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap"
-        rel="stylesheet"
-    >
+        rel="stylesheet">
 
     <link rel="stylesheet" href="../css/variables.css">
     <link rel="stylesheet" href="../css/reset.css">
@@ -27,203 +23,201 @@
 
 <body>
 
-<header class="navbar">
+    <header class="navbar">
 
-    <div class="container navbar-inner">
+        <div class="container navbar-inner">
 
-        <a href="../index.html" class="logo">
-            KA<span>YA</span>
-        </a>
-
-        <nav class="nav-links">
-
-            <a href="jobseeker-dashboard.html">
-                Dashboard
+            <a href="../index.html" class="logo">
+                KA<span>YA</span>
             </a>
 
-            <a href="search.html">
-                Find Work
-            </a>
+            <nav class="nav-links">
 
-            <a href="profile.html">
-                My Profile
-            </a>
+                <a href="jobseeker-dashboard.html">
+                    Dashboard
+                </a>
 
-        </nav>
+                <a href="search.html">
+                    Find Work
+                </a>
 
-        <button
-            class="btn btn-secondary"
-            onclick="logout()"
-        >
-            Logout
-        </button>
+                <a href="profile.html">
+                    My Profile
+                </a>
 
-    </div>
+            </nav>
 
-</header>
+            <div class="nav-actions">
+                <span id="navbarUserName">Job Seeker</span>
+
+                <button class="btn btn-secondary" onclick="logout()">
+                    Logout
+                </button>
+            </div>
+
+    </header>
 
 
-<main class="dashboard">
+    <main class="dashboard">
 
-    <div class="container">
+        <div class="container">
 
-        <div class="dashboard-header">
+            <div class="dashboard-header">
 
-            <div>
+                <div>
 
-                <span class="auth-label">
-                    JOB SEEKER
-                </span>
+                    <span class="auth-label">
+                        JOB SEEKER
+                    </span>
 
-                <h1>
-                    Welcome back.
-                </h1>
+                    <h1>
+                        Welcome back, <span id="welcomeName">Job Seeker</span>.
+                    </h1>
 
-                <p>
-                    Manage your profile and discover opportunities.
-                </p>
+                    <p>
+                        Manage your profile and discover opportunities.
+                    </p>
+
+                </div>
+
+                <a href="profile.html" class="btn btn-primary">
+                    Edit Profile
+                </a>
 
             </div>
 
-            <a
-                href="profile.html"
-                class="btn btn-primary"
-            >
-                Edit Profile
-            </a>
+
+            <div class="stats-grid">
+
+                <div class="card stat-card">
+
+                    <span>
+                        PROFILE VIEWS
+                    </span>
+
+                    <strong>
+                        #
+                    </strong>
+
+                </div>
+
+
+                <div class="card stat-card">
+
+                    <span>
+                        RATING
+                    </span>
+
+                    <strong>
+                        4.9 ★
+                    </strong>
+
+                </div>
+
+
+                <div class="card stat-card">
+
+                    <span>
+                        PORTFOLIO ITEMS
+                    </span>
+
+                    <strong>
+                        #
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <section class="dashboard-section">
+
+                <div class="section-header">
+
+                    <h2>
+                        Recommended opportunities
+                    </h2>
+
+                    <p>
+                        Jobs that may match your skills.
+                    </p>
+
+                </div>
+
+
+                <div class="opportunity-list">
+
+                    <article class="card opportunity">
+
+                        <div>
+
+                            <span class="opportunity-category">
+                                WEB DEVELOPMENT
+                            </span>
+
+                            <h3>
+                                Build a small business website
+                            </h3>
+
+                            <p>
+                                Looking for someone to create
+                                a responsive website.
+                            </p>
+
+                        </div>
+
+                        <button class="btn btn-primary">
+                            View
+                        </button>
+
+                    </article>
+
+
+                    <article class="card opportunity">
+
+                        <div>
+
+                            <span class="opportunity-category">
+                                GRAPHIC DESIGN
+                            </span>
+
+                            <h3>
+                                Create a restaurant logo
+                            </h3>
+
+                            <p>
+                                Small local restaurant looking
+                                for a new identity.
+                            </p>
+
+                        </div>
+
+                        <button class="btn btn-primary">
+                            View
+                        </button>
+
+                    </article>
+
+                </div>
+
+            </section>
 
         </div>
 
+    </main>
 
-        <div class="stats-grid">
+    <!-- 1. Enforce RBAC & Session Check -->
+    <script type="module" src="../js/app.js"></script>
+    <script type="module" src="../js/jobseeker-dashboard.js"></script>
 
-            <div class="card stat-card">
+    <!-- 2. Attach logout function to window -->
+    <script type="module">
+        import { logoutUser } from '../js/auth.js';
 
-                <span>
-                    PROFILE VIEWS
-                </span>
-
-                <strong>
-                    128
-                </strong>
-
-            </div>
-
-
-            <div class="card stat-card">
-
-                <span>
-                    RATING
-                </span>
-
-                <strong>
-                    4.9 ★
-                </strong>
-
-            </div>
-
-
-            <div class="card stat-card">
-
-                <span>
-                    PORTFOLIO ITEMS
-                </span>
-
-                <strong>
-                    6
-                </strong>
-
-            </div>
-
-        </div>
-
-
-        <section class="dashboard-section">
-
-            <div class="section-header">
-
-                <h2>
-                    Recommended opportunities
-                </h2>
-
-                <p>
-                    Jobs that may match your skills.
-                </p>
-
-            </div>
-
-
-            <div class="opportunity-list">
-
-                <article class="card opportunity">
-
-                    <div>
-
-                        <span class="opportunity-category">
-                            WEB DEVELOPMENT
-                        </span>
-
-                        <h3>
-                            Build a small business website
-                        </h3>
-
-                        <p>
-                            Looking for someone to create
-                            a responsive website.
-                        </p>
-
-                    </div>
-
-                    <button class="btn btn-primary">
-                        View
-                    </button>
-
-                </article>
-
-
-                <article class="card opportunity">
-
-                    <div>
-
-                        <span class="opportunity-category">
-                            GRAPHIC DESIGN
-                        </span>
-
-                        <h3>
-                            Create a restaurant logo
-                        </h3>
-
-                        <p>
-                            Small local restaurant looking
-                            for a new identity.
-                        </p>
-
-                    </div>
-
-                    <button class="btn btn-primary">
-                        View
-                    </button>
-
-                </article>
-
-            </div>
-
-        </section>
-
-    </div>
-
-</main>
-
-<!-- 1. Enforce RBAC & Session Check -->
-<script type="module" src="../js/app.js"></script>
-
-<!-- 2. Attach logout function to window -->
-<script type="module">
-    import { logoutUser } from '../js/auth.js';
-
-    window.logout = async function() {
-        await logoutUser();
-    };
-</script>
+        window.logout = async function () {
+            await logoutUser();
+        };
+    </script>
 </body>
+
 </html>
